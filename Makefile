@@ -1,6 +1,5 @@
-CC = /tmp/arduino-1.8.1/hardware/tools/avr/bin/avr-gcc
-OBJCOPY = /tmp/arduino-1.8.1/hardware/tools/avr/bin/avr-objcopy
-AVRDUDE =
+CC = avr-gcc
+OBJCOPY = avr-objcopy
 
 MCU = atmega2560
 F_CPU = 16000000
@@ -8,8 +7,8 @@ F_CPU = 16000000
 CFLAGS = -mmcu=$(MCU) -DF_CPU=$(F_CPU)L -Wall -O2
 LDFLAGS = -mmcu=$(MCU)
 
-MAIN = blink
-SRCS = blink.c
+MAIN = temp
+SRCS = hd44780.c lcd.c blink.c $(MAIN).c
 
 OBJS = $(SRCS:.c=.o)
 

@@ -1,13 +1,22 @@
-#include <util/delay.h>
+#include "blink.h"
+
+#include "defines.h"
+#include "bitops.h"
+
 #include <avr/io.h>
-#include <avr/sfr_defs.h>
+#include <util/delay.h>
 
-int main(void) {
-  DDRB |= _BV(DDB7);
+void blink_init() {
+  SET(DDR, LED);
+}
+
+void blink() {
+  TOGGLE(PORT, LED);
+}
+
+void blink_loop() {
   while(1) {
-    PORTB ^= _BV(PB7);
-    _delay_ms(5000L);
+    blink();
+    _delay_ms(1000L);
   }
-
-  return 0;
 }
