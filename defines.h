@@ -10,6 +10,22 @@
  *
  * $Id: defines.h 2186 2010-09-22 10:25:15Z aboyapati $
  */
+#include <avr/io.h>
+
+/* UART baud rate */
+#define UART_BAUD  9600
+
+#define UBRRH UBRR0H
+#define UBRRL UBRR0L
+#define UCSRA UCSR0A
+#define UCSRB UCSR0B
+#define UDR UDR0
+#define UDRE UDRE0
+#define TXEN TXEN0
+#define RXEN RXEN0
+#define RXC RXC0
+#define FE FE0
+#define DOR DOR0
 
 /* HD44780 LCD port connections */
 #define HD44780_RS B, 0

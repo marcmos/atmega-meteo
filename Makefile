@@ -7,8 +7,8 @@ F_CPU = 16000000
 CFLAGS = -mmcu=$(MCU) -DF_CPU=$(F_CPU)L -Wall -O2
 LDFLAGS = -mmcu=$(MCU)
 
-MAIN = temp
-SRCS = hd44780.c lcd.c blink.c $(MAIN).c
+MAIN = atmega-meteo
+SRCS = hd44780.c lcd.c uart.c blink.c $(MAIN).c
 
 OBJS = $(SRCS:.c=.o)
 
