@@ -2,7 +2,7 @@
 
 while :
 do
-	  xml=`curl http://meteo.ftj.agh.edu.pl/meteo/meteo.xml`
+    xml=`curl http://meteo.ftj.agh.edu.pl/meteo/meteo.xml`
     temperature=$(grep -Po '<ta>\K[^ ]+' <<< $xml);
     windchill=$(grep -Po '<owindchill>\K[^ ]+' <<< $xml);
     humidity=$(grep -Po '<ua>\K[^ ]+' <<< $xml);
