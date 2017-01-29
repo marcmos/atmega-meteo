@@ -61,10 +61,18 @@ lcd_init(void)
 int
 lcd_putchar(char c, FILE *unused)
 {
+  static int line;
   static bool nl_seen;
 
-  if (nl_seen && c != '\n')
-    {
+  if (c == '\n') {
+    nl_seen = true;
+    return 0;
+  }
+  if (nl_seen) {
+    if (line == 0) {
+      lcd_newline();
+      line = 1;
+    } else {
       /*
        * First character after newline, clear display and home cursor.
        */
@@ -75,17 +83,18 @@ lcd_putchar(char c, FILE *unused)
       hd44780_wait_ready(true);
       hd44780_outcmd(HD44780_DDADDR(0));
 
-      nl_seen = false;
+      line = 0;
     }
-  if (c == '\n')
-    {
-      nl_seen = true;
-    }
-  else
-    {
-      hd44780_wait_ready(false);
-      hd44780_outdata(c);
-    }
+    nl_seen = false;
+  }
+
+  hd44780_wait_ready(false);
+  hd44780_outdata(c);
 
   return 0;
+}
+
+void lcd_newline() {
+  hd44780_wait_ready(false);
+  hd44780_outcmd(HD44780_DDADDR(0x40));
 }

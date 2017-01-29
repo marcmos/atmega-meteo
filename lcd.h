@@ -22,3 +22,5 @@ void	lcd_init(void);
  * Send one character to the LCD.
  */
 int	lcd_putchar(char c, FILE *stream);
+
+void lcd_newline();
