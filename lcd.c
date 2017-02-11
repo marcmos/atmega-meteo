@@ -98,3 +98,28 @@ void lcd_newline() {
   hd44780_wait_ready(false);
   hd44780_outcmd(HD44780_DDADDR(0x40));
 }
+
+static
+void lcd_setglyph(const uint8_t glyph[]) {
+  int row;
+
+  for(row = 0; row < 8; ++row) {
+    hd44780_wait_ready(false);
+    hd44780_outdata(glyph[row]);
+  }
+
+  hd44780_wait_ready(false);
+}
+
+void lcd_setglyphs(const uint8_t glyphs[][8], int count) {
+  int glyph;
+
+  hd44780_outcmd(HD44780_CGADDR(0));
+
+  for(glyph = 0; glyph < count; ++glyph) {
+    lcd_setglyph(glyphs[glyph]);
+  }
+
+  hd44780_outcmd(HD44780_HOME);
+  hd44780_wait_ready(false);
+}
