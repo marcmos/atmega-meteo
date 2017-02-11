@@ -44,14 +44,17 @@ do
         pollution
     fi
 
-    if [ $(($count % 3)) -eq 0 ]
+    if [ $(($count % 4)) -eq 0 ]
     then
         echo -e "$meteo\n"
         echo -e $meteo > /dev/ttyACM0
-    elif [ $(($count % 3)) -eq 1 ]
+    elif [ $(($count % 4)) -eq 1 ]
     then
         echo -e "$pollution\n"
         echo -e $pollution > /dev/ttyACM0
+    elif [ $(($count % 4)) -eq 2 ]
+    then
+        cat dziekanat_msg > /dev/ttyACM0
     else
         echo -e "\\x11" > /dev/ttyACM0
         sleep 1;
