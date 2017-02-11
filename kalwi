@@ -1,0 +1,22 @@
+#!/bin/bash
+
+count=0
+
+while :
+do
+    if [ $(($count % 3)) -eq 0 ]
+    then
+       echo -e "KALWI DZWONI \\x00\\x01" > /dev/ttyACM0
+       echo -e " >           \\x02\\x03" >> /dev/ttyACM0
+    elif [ $(($count % 3)) -eq 1 ]
+    then
+         echo -e "KALWI DZWONI \\x00\\x01" > /dev/ttyACM0
+         echo -e "    >        \\x02\\x03" >> /dev/ttyACM0
+    else
+        echo -e "KALWI DZWONI \\x00\\x01" > /dev/ttyACM0
+        echo -e "         >   \\x02\\x03" >> /dev/ttyACM0
+    fi
+
+    count=$(($count + 1))
+    sleep 1
+done
