@@ -5,7 +5,7 @@ function meteo {
     temperature=$(grep -Po '<ta>\K[^ ]+' <<< $xml);
     windchill=$(grep -Po '<owindchill>\K[^ ]+' <<< $xml);
     humidity=$(grep -Po '<ua>\K[^ ]+' <<< $xml);
-    meteo="T: $temperature/$windchill\nH: $humidity%"
+    meteo="T: $temperature/$windchill\\xdfC\nH: $humidity%"
 }
 
 function pollution {
