@@ -32,7 +32,7 @@
 #define HD44780_RW B, 1
 #define HD44780_E  B, 2
 /* The data bits have to be not only in ascending order but also consecutive. */
-#define HD44780_D4 C, 0
+#define HD44780_D C, 0
 
 /* Whether to read the busy flag, or fall back to
    worst-time delays. */
