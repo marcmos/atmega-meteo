@@ -1,7 +1,7 @@
 #!/bin/bash
 
 function meteo {
-    xml=`curl -s http://meteo.ftj.agh.edu.pl/meteo/meteo.xml`
+    xml=`curl -s -m 10 http://meteo.ftj.agh.edu.pl/meteo/meteo.xml`
     temperature=$(grep -Po '<ta>\K[^ ]+' <<< $xml);
     windchill=$(grep -Po '<owindchill>\K[^ ]+' <<< $xml);
     humidity=$(grep -Po '<ua>\K[^ ]+' <<< $xml);
@@ -11,7 +11,7 @@ function meteo {
 function pollution {
     date=`date +%d.%m.%Y`;
     pollution=`curl \
-        -s \
+        -m 10 \
         -X POST \
         -H 'Content-Type: application/x-www-form-urlencoded; charset=UTF-8' \
         --data-urlencode "query={\"measType\":\"Auto\",\"viewType\":\"Station\",\"dateRange\":\"Day\",\"date\":\"$date\",\"viewTypeEntityId\":\"6\",\"channels\":[202,46]}" \
@@ -44,13 +44,19 @@ do
         pollution
     fi
 
-    if [ $(($count % 2)) -eq 0 ]
+    if [ $(($count % 3)) -eq 0 ]
     then
         echo -e "$meteo\n"
         echo -e $meteo > /dev/ttyACM0
-    else
+    elif [ $(($count % 3)) -eq 1 ]
+    then
         echo -e "$pollution\n"
         echo -e $pollution > /dev/ttyACM0
+    else
+        echo -e "\\x11" > /dev/ttyACM0
+        sleep 1;
+        cat dht11_msg
+        cat dht11_msg > /dev/ttyACM0
     fi
     count=$(($count + 1))
     sleep 5
