@@ -24,3 +24,5 @@ void	lcd_init(void);
 int	lcd_putchar(char c, FILE *stream);
 
 void lcd_newline();
+
+void lcd_setglyphs(const uint8_t glyphs[][8], int count);
