@@ -1,0 +1,10 @@
+#!/bin/bash
+
+while :
+do
+    dht11=`head -1 /dev/ttyACM0 | sed -e 's/\r//g'`
+    hum=`echo $dht11 | cut -d ' ' -f 1`
+    te=`echo $dht11 | cut -d ' ' -f 2`
+    echo "Boy next door" > dht11_msg
+    echo -e "T: $te\\xdfC, H: $hum%" >> dht11_msg
+done

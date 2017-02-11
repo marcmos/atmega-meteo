@@ -40,3 +40,6 @@
 
 /* Blink LED */
 #define LED B, 7
+
+/* DHT-11 Humidity & Temperature sensor */
+#define DHT11 A, 0

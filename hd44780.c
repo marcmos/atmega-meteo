@@ -133,17 +133,8 @@ hd44780_wait_ready(bool longwait)
 #endif
 }
 
-/*
- * Initialize the LCD controller.
- *
- * The initialization sequence has a mandatory timing so the
- * controller can safely recognize the type of interface desired.
- * This is the only area where timed waits are really needed as
- * the busy flag cannot be probed initially.
- */
 void
-hd44780_init(void)
-{
+hd44780_init(void) {
   SET(DDR, HD44780_RS);
   SET(DDR, HD44780_RW);
   SET(DDR, HD44780_E);
