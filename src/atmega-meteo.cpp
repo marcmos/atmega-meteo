@@ -2,8 +2,8 @@
 #include "serial/uart.h"
 #include "blink.h"
 
-// FILE uart_str = FDEV_SETUP_STREAM(uart_putchar, uart_getchar, _FDEV_SETUP_RW);
-// FILE lcd_str = FDEV_SETUP_STREAM(lcd_putchar, NULL, _FDEV_SETUP_WRITE);
+FILE uart_str;
+FILE lcd_str;
 
 static void ioinit(void) {
   lcd_init();
@@ -14,13 +14,16 @@ static void ioinit(void) {
 int main(void) {
   ioinit();
 
-  // stdout = stdin = &uart_str;
-  // stderr = &lcd_str;
+  fdev_setup_stream(&uart_str, uart_putchar, uart_getchar, _FDEV_SETUP_RW);
+  fdev_setup_stream(&lcd_str, lcd_putchar, NULL, _FDEV_SETUP_WRITE);
 
-  // while(1) {
-  //   char c = getchar();
-  //   lcd_putchar(c, NULL);
-  // }
+  stdout = stdin = &uart_str;
+  stderr = &lcd_str;
+
+  while(1) {
+    char c = getchar();
+    lcd_putchar(c, NULL);
+  }
 
   return 0;
 }

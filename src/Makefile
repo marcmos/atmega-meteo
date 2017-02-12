@@ -4,7 +4,7 @@ OBJCOPY = avr-objcopy
 MCU = atmega2560
 F_CPU = 16000000
 
-CXXFLAGS = -I. -mmcu=$(MCU) -DF_CPU=$(F_CPU)L -Wall -O2
+CXXFLAGS = -I. -std=c++11 -mmcu=$(MCU) -DF_CPU=$(F_CPU)L -Wall -O2
 LDFLAGS = -mmcu=$(MCU)
 
 MAIN = atmega-meteo
