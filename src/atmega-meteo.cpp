@@ -1,6 +1,6 @@
-#include "lcd/lcd.h"
-#include "serial/uart.h"
-#include "blink.h"
+#include "lcd/lcd.hpp"
+#include "serial/uart.hpp"
+#include "blink.hpp"
 
 FILE uart_str;
 FILE lcd_str;

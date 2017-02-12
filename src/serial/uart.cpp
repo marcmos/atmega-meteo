@@ -11,11 +11,11 @@
  * $Id: uart.c 1008 2005-12-28 21:38:59Z joerg_wunsch $
  */
 
-#include "defines.h"
+#include "../defines.hpp"
 
 #include <stdint.h>
 
-#include "uart.h"
+#include "uart.hpp"
 
 /*
  * Initialize the UART to 9600 Bd, tx/rx, 8N1.

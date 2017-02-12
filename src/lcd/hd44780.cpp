@@ -14,7 +14,7 @@
  * $Id: hd44780.c 2002 2009-06-25 20:21:16Z joerg_wunsch $
  */
 
-#include "defines.h"
+#include "../defines.hpp"
 
 #include <stdbool.h>
 #include <stdint.h>
@@ -22,8 +22,8 @@
 #include <avr/io.h>
 #include <util/delay.h>
 
-#include "bitops.h"
-#include "hd44780.h"
+#include "../bitops.hpp"
+#include "hd44780.hpp"
 
 /* macros, used for data path */
 #define ASSIGN_(what, p, m, v) GLUE(what, p) = v

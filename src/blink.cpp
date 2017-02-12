@@ -1,7 +1,7 @@
-#include "blink.h"
+#include "blink.hpp"
 
-#include "defines.h"
-#include "bitops.h"
+#include "defines.hpp"
+#include "bitops.hpp"
 
 #include <avr/io.h>
 #include <util/delay.h>
