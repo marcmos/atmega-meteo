@@ -1,28 +1,22 @@
-#include "lcd/lcd.hpp"
-#include "serial/uart.hpp"
-#include "blink.hpp"
+#include "lcd/HD44780.hpp"
 
-FILE uart_str;
-FILE lcd_str;
-
-static void ioinit(void) {
-  lcd_init();
-  uart_init();
-  blink_init();
-}
+#include <util/delay.h>
 
 int main(void) {
-  ioinit();
+  HD44780 lcd = HD44780();
+  const uint16_t period_ms = 100;
 
-  fdev_setup_stream(&uart_str, uart_putchar, uart_getchar, _FDEV_SETUP_RW);
-  fdev_setup_stream(&lcd_str, lcd_putchar, NULL, _FDEV_SETUP_WRITE);
+  while(true) {
+    lcd.display("This is a test\n");
+    _delay_ms(period_ms);
+    lcd.display("in second line.\n");
+    _delay_ms(period_ms);
+    lcd.display("HD44780\n");
+    _delay_ms(period_ms);
+    lcd.display("on duty!\n");
+    _delay_ms(period_ms);
 
-  stdout = stdin = &uart_str;
-  stderr = &lcd_str;
-
-  while(1) {
-    char c = getchar();
-    lcd_putchar(c, NULL);
+    lcd.reset();
   }
 
   return 0;

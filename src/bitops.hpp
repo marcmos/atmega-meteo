@@ -9,8 +9,7 @@
  * Bit operation macros, derived from hd44780.c.
  */
 
-#ifndef _BITOPS_H_
-#define _BITOPS_H_
+#pragma once
 
 #define GLUE(a, b)     a##b
 
@@ -23,5 +22,3 @@
 #define CLR(what, x) CLR_(what, x)
 #define TOGGLE(what, x) TOGGLE_(what, x)
 #define GET(/* PIN, */ x) GET_(x)
-
-#endif

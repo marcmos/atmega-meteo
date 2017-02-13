@@ -8,7 +8,7 @@ CXXFLAGS = -I. -std=c++11 -mmcu=$(MCU) -DF_CPU=$(F_CPU)L -Wall -O2
 LDFLAGS = -mmcu=$(MCU)
 
 MAIN = atmega-meteo
-SRCS = lcd/hd44780.cpp lcd/lcd.cpp serial/uart.cpp blink.cpp $(MAIN).cpp
+SRCS = lcd/HD44780.cpp serial/uart.cpp blink.cpp $(MAIN).cpp
 
 OBJS = $(SRCS:.cpp=.o)
 
