@@ -1,15 +1,6 @@
-CXX = avr-g++
-OBJCOPY = avr-objcopy
-
-MCU = atmega2560
-F_CPU = 16000000
-
-CXXFLAGS = -I. -std=c++11 -mmcu=$(MCU) -DF_CPU=$(F_CPU)L -Wall -O2
-LDFLAGS = -mmcu=$(MCU)
-
 MAIN = atmega-meteo
-SRCS = lcd/HD44780.cpp serial/UART.cpp serial/Serial.cpp blink.cpp $(MAIN).cpp
 
+SRCS = $(wildcard *.cpp) $(wildcard */*.cpp)
 OBJS = $(SRCS:.cpp=.o)
 
 all: $(MAIN)
@@ -23,4 +14,4 @@ $(MAIN): $(OBJS)
 
 .PHONY: clean
 clean:
-	rm -f *.o $(MAIN) $(MAIN).hex
+	rm -f *.o */*.o $(MAIN) $(MAIN).hex
