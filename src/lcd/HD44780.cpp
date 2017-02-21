@@ -57,7 +57,7 @@ void HD44780::reset() {
   wait_ready(false);
 }
 
-void HD44780::display(const char *str) {
+void HD44780::print(const char *str) {
   while(*str++) putchar(*(str - 1));
 }
 
