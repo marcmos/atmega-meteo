@@ -12,6 +12,7 @@ DHT11::DHT11() {
   _delay_ms(2000);
 }
 
+// FIXME Throttle read calls
 void DHT11::read() {
   uint8_t data[5] = {0, 0, 0, 0, 0};
 
