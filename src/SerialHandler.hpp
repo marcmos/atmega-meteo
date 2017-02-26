@@ -1,7 +1,7 @@
 #pragma once
 
-#include "interrupt.hpp"
-#include "serial/UART.hpp"
+#include "hw/interrupt.hpp"
+#include "hw/serial/UART.hpp"
 #include "Pollution.hpp"
 
 class SerialHandler: public interrupt::Handler {

@@ -1,8 +1,7 @@
 #include <avr/io.h>
 
 #include "SerialHandler.hpp"
-#include "serial/UART.hpp"
-#include "lcd/HD44780.hpp"
+#include "hw/lcd/HD44780.hpp"
 
 SerialHandler::SerialHandler(UART &uart, Pollution *pollution) :
   uart(uart),

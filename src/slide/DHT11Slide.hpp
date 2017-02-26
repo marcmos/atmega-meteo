@@ -1,7 +1,7 @@
 #pragma once
 
-#include "lcd/Slide2x16.hpp"
-#include "sensor/DHT11.hpp"
+#include "Slide2x16.hpp"
+#include "../hw/sensor/DHT11.hpp"
 
 class DHT11Slide : public Slide2x16 {
 public:

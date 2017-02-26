@@ -1,6 +1,6 @@
 MAIN = atmega-meteo
 
-SRCS = $(wildcard *.cpp) $(wildcard */*.cpp)
+SRCS = $(wildcard *.cpp) $(wildcard */*.cpp) $(wildcard */*/*.cpp)
 OBJS = $(SRCS:.cpp=.o)
 
 all: $(MAIN)
@@ -14,4 +14,4 @@ $(MAIN): $(OBJS)
 
 .PHONY: clean
 clean:
-	rm -f *.o */*.o $(MAIN) $(MAIN).hex
+	rm -f *.o */*.o */*/*.o $(MAIN) $(MAIN).hex

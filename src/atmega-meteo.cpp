@@ -1,17 +1,15 @@
-#include "serial/UART.hpp"
-#include "lcd/HD44780.hpp"
-
-#include "sensor/DHT11.hpp"
-
-#include "DHT11Slide.hpp"
-#include "SlideSwitcher.hpp"
 #include <util/delay.h>
 
-#include "Pollution.hpp"
-#include "PollutionSlide.hpp"
+#include "hw/serial/UART.hpp"
+#include "hw/lcd/HD44780.hpp"
+#include "hw/sensor/DHT11.hpp"
+#include "hw/interrupt.hpp"
+
+#include "slide/DHT11Slide.hpp"
+#include "slide/SlideSwitcher.hpp"
+#include "slide/PollutionSlide.hpp"
 
 #include "SerialHandler.hpp"
-#include "interrupt.hpp"
 
 int main(void) {
   UART serial;

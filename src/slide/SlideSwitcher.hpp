@@ -1,7 +1,7 @@
 #pragma once
 
-#include "lcd/LCD.hpp"
-#include "lcd/Slide.hpp"
+#include "../hw/lcd/LCD.hpp"
+#include "../hw/lcd/Slide.hpp"
 
 class SlideSwitcher {
 public:

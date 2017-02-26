@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Slide.hpp"
+#include "../hw/lcd/Slide.hpp"
 
 class Slide2x16 : public Slide {
 public:
