@@ -1,7 +1,5 @@
 #pragma once
 
-#include "serial/Serial.hpp"
-
 namespace interrupt {
   class Handler {
   public:

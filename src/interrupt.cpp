@@ -3,7 +3,7 @@
 #include "interrupt.hpp"
 
 namespace interrupt {
-  static Handler *serial_handler = NULL;
+  static Handler *serial_handler = nullptr;
 
   void set_serial_handler(Handler *handler) {
     serial_handler = handler;

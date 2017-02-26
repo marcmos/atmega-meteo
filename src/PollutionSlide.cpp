@@ -1,0 +1,17 @@
+#include "PollutionSlide.hpp"
+
+#include <stdio.h>
+
+PollutionSlide::PollutionSlide(const Pollution &pollution):
+  Slide2x16(lines[0], lines[1]),
+  pollution(pollution)
+{}
+
+bool PollutionSlide::update() {
+  snprintf(lines[0], 16, "2.5: %d (%d%%)", pollution.pm_2_5,
+           pollution.pm_2_5_percent());
+  snprintf(lines[1], 16, "10: %d (%d%%)", pollution.pm_10,
+           pollution.pm_10_percent());
+
+  return true;
+}
