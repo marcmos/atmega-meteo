@@ -8,5 +8,9 @@ SlideSwitcher::SlideSwitcher(LCD &lcd, Slide **slides, size_t count) :
 {}
 
 void SlideSwitcher::next() {
-  lcd.display(slides[current++ % count]);
+  bool updated = false;
+
+  do {
+    updated = lcd.display(slides[current++ % count]);
+  } while(!updated);
 }

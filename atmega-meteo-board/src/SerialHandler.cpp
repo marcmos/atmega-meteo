@@ -14,10 +14,9 @@ void SerialHandler::enable_interrupts() {
 
 void SerialHandler::interrupt() {
   switch(uart.rx()) {
-  case 32:
+  case SerialHandler::OP_POLLUTION:
     if(!pollution) break;
-    pollution->pm_2_5 = uart.rx();
-    pollution->pm_10 = uart.rx();
+    pollution->set(uart.rx(), uart.rx());
     break;
   default:
     break;

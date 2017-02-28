@@ -14,4 +14,8 @@ public:
 private:
   UART &uart;
   Pollution *pollution;
+
+  enum Opcode {
+    OP_POLLUTION = 0x20,
+  };
 };
