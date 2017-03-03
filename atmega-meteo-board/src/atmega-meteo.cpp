@@ -5,9 +5,10 @@
 #include "hw/sensor/DHT11.hpp"
 #include "hw/interrupt.hpp"
 
-#include "slide/DHT11Slide.hpp"
-#include "slide/SlideSwitcher.hpp"
+#include "slide/IndoorSlide.hpp"
 #include "slide/PollutionSlide.hpp"
+#include "slide/WeatherSlide.hpp"
+#include "slide/SlideSwitcher.hpp"
 
 #include "SerialHandler.hpp"
 
@@ -16,16 +17,19 @@ int main(void) {
   HD44780 lcd;
 
   DHT11 dht11;
-  DHT11Slide dht11_slide(dht11);
+  IndoorSlide indoor_slide(dht11);
 
   Pollution pollution;
   PollutionSlide pollution_slide(pollution);
 
-  Slide *slides[] = {&dht11_slide, &pollution_slide};
+  Weather weather;
+  WeatherSlide weather_slide(weather);
+
+  Slide *slides[] = {&indoor_slide, &pollution_slide, &weather_slide};
 
   SlideSwitcher switcher(lcd, slides, sizeof(slides) / sizeof(slides[0]));
 
-  SerialHandler serial_handler(serial, &pollution);
+  SerialHandler serial_handler(serial, &pollution, &weather);
   interrupt::set_serial_handler(&serial_handler);
 
   while(1) {

@@ -1,11 +1,11 @@
 #include <avr/io.h>
 
 #include "SerialHandler.hpp"
-#include "hw/lcd/HD44780.hpp"
 
-SerialHandler::SerialHandler(UART &uart, Pollution *pollution) :
+SerialHandler::SerialHandler(UART &uart, Pollution *pollution, Weather *weather) :
   uart(uart),
-  pollution(pollution)
+  pollution(pollution),
+  weather(weather)
 {}
 
 void SerialHandler::enable_interrupts() {
@@ -13,10 +13,20 @@ void SerialHandler::enable_interrupts() {
 }
 
 void SerialHandler::interrupt() {
+  char bytes[2];
+
   switch(uart.rx()) {
   case SerialHandler::OP_POLLUTION:
     if(!pollution) break;
-    pollution->set(uart.rx(), uart.rx());
+    bytes[0] = uart.rx();
+    bytes[1] = uart.rx();
+    pollution->set(bytes[0], bytes[1]);
+    break;
+  case SerialHandler::OP_WEATHER:
+    if(!weather) break;
+    bytes[0] = uart.rx();
+    bytes[1] = uart.rx();
+    weather->set(bytes[0], bytes[1]);
     break;
   default:
     break;

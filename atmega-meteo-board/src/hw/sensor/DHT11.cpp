@@ -7,9 +7,9 @@
 #include <avr/io.h>
 #include <util/delay.h>
 
-DHT11::DHT11() {
-  // Make sure DHT-11 has time to initialize.
-  _delay_ms(2000);
+DHT11::DHT11(bool fast) {
+  if(!fast)
+    _delay_ms(2000); // Make sure DHT-11 has time to initialize.
 }
 
 // FIXME Throttle read calls
@@ -40,14 +40,14 @@ void DHT11::read() {
     }
   }
 
-  humid = data[0];
-  temp = data[2];
+  _humid = data[0];
+  _temp = data[2];
 }
 
-uint8_t DHT11::get_humid() const {
-  return humid;
+uint8_t DHT11::humid() const {
+  return _humid;
 }
 
-uint8_t DHT11::get_temp() const {
-  return temp;
+uint8_t DHT11::temp() const {
+  return _temp;
 }

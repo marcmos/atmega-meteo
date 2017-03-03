@@ -3,9 +3,9 @@
 #include "Slide2x16.hpp"
 #include "../hw/sensor/DHT11.hpp"
 
-class DHT11Slide : public Slide2x16 {
+class IndoorSlide : public Slide2x16 {
 public:
-  DHT11Slide(DHT11 &dht11);
+  IndoorSlide(DHT11 &dht11);
 
   bool update();
 
