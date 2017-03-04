@@ -12,7 +12,7 @@ bool WeatherSlide::update() {
   if(!weather.initialized())
     return false;
 
-  snprintf(lines[1], 16, "T: %d\xdf" "C, H: %d%%", weather.temp(), weather.humid());
+  snprintf(lines[1], 16, "T: %u\xdf" "C, H: %u%%", weather.temp(), weather.humid());
 
   return true;
 }
