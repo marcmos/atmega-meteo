@@ -1,30 +1,45 @@
-import System.Serial
-import System.IO (hPutChar, hFlush)
-import Data.Char (chr)
+import qualified System.Serial as SS
+import System.IO
 import Network.HTTP.Simple
 import Data.Time.Clock
-import Data.Time.Calendar
 import Control.Concurrent
-import Text.XML.Light.Input (parseXML)
+import Data.Word (Word8)
+import Foreign.Marshal.Array (newArray)
 
 import Pollution
 import Weather
 
+openSerial :: IO Handle
+openSerial = do
+  commHandle <- SS.openSerial "/dev/ttyACM0" SS.B9600 8 SS.One SS.NoParity SS.NoFlowControl
+  threadDelay 4000000
+  return commHandle
+
+writeSerial :: Handle -> [Word8] -> IO ()
+writeSerial h buf = do
+  p <- newArray buf
+  hPutBuf h p (length buf)
+  putStrLn ("Wrote bytes: " ++ show buf)
+
 main :: IO ()
 main = do
-  serial <- openSerial "/dev/ttyACM0" B9600 8 One NoParity NoFlowControl
-  threadDelay 4000000
+  commHandle <- openSerial
+  --commHandle <- snd <$> openBinaryTempFileWithDefaultPermissions "/tmp" "atmega-meteo"
+
   today <- utctDay <$> getCurrentTime
   pollution <- currentMeasurements . getResponseBody <$> fetchPollution today
-  putStrLn $ show pollution
-  hPutChar serial $ chr 0x20
-  hPutChar serial $ chr . round . snd $ pollution !! 1
-  hPutChar serial $ chr . round . snd $ pollution !! 0
+  print pollution
+
+  pm25 <- return . round . snd $ pollution !! 1
+  pm10 <- return . round . snd $ head pollution
+
+  buf <- return [0x20, pm25, pm10]
+  writeSerial commHandle buf
+
   Just (temp, humid) <- getWeather
-  hPutChar serial $ chr 0x21
-  hFlush serial
-  hPutChar serial $ chr . round $ temp
-  hFlush serial
-  hPutChar serial $ chr . round $ humid
-  hFlush serial
-  putStrLn $ show (temp, humid)
+  print (temp, humid)
+
+  buf <- return [0x21, round temp, round humid]
+  writeSerial commHandle buf
+
+  hClose commHandle

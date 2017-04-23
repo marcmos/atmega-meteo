@@ -11,9 +11,8 @@ import qualified Data.ByteString.Char8 as B
 data Measurement = Measurement { timestamp :: String, value :: Double } deriving Show
 instance FromJSON Measurement where
   parseJSON json    = do
-    [timestamp, pollution] <- parseJSON json
-    return $ Measurement timestamp (read pollution)
-  parseJSON invalid = typeMismatch "Measurement" invalid
+    [time, pollution] <- parseJSON json
+    return $ Measurement time (read pollution)
 
 data Parameter = Parameter { name :: String, measurements :: [Measurement] } deriving Show
 instance FromJSON Parameter where
@@ -22,7 +21,7 @@ instance FromJSON Parameter where
     v .: "data"
   parseJSON invalid = typeMismatch "Parameter" invalid
 
-data Pollution = Pollution { parameters :: [Parameter] } deriving Show
+newtype Pollution = Pollution { parameters :: [Parameter] } deriving Show
 instance FromJSON Pollution where
   parseJSON (Object v) = Pollution <$> (v .: "data" >>= (.: "series"))
   parseJSON invalid    = typeMismatch "Pollution" invalid

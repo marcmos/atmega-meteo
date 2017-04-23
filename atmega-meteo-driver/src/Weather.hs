@@ -19,4 +19,4 @@ parseWeather xml = do
   root <- parseXMLDoc xml >>= findChild (QName "dane_aktualne" Nothing Nothing)
   temp <- read . head . words . strContent <$> findChild (QName "ta" Nothing Nothing) root
   humid <- read . head . words . strContent <$> findChild (QName "ua" Nothing Nothing) root
-  return $ (temp, humid)
+  return (temp, humid)
