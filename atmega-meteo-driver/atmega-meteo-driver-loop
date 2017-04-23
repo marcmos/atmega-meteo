@@ -1,0 +1,7 @@
+#!/bin/sh
+
+while :
+do
+	./atmega-meteo-driver
+	sleep 5m
+done
