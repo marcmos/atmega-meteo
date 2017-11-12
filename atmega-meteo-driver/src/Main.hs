@@ -1,7 +1,7 @@
 import qualified System.Serial as SS
 import System.IO
 import Network.HTTP.Simple
-import Data.Time.Clock
+import Data.Time.Clock (utctDay, getCurrentTime)
 import Control.Concurrent
 import Data.Word (Word8)
 import Foreign.Marshal.Array (newArray)
@@ -36,10 +36,10 @@ main = do
   buf <- return [0x20, pm25, pm10]
   writeSerial commHandle buf
 
-  Just (temp, humid) <- getWeather
+  Just (temp, humid, hour, minute) <- getWeather
   print (temp, humid)
 
-  buf <- return [0x21, round temp, round humid]
+  buf <- return [0x21, round temp, round humid, fromIntegral hour, fromIntegral minute]
   writeSerial commHandle buf
 
   hClose commHandle

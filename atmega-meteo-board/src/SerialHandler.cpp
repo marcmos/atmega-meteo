@@ -13,7 +13,7 @@ void SerialHandler::enable_interrupts() {
 }
 
 void SerialHandler::interrupt() {
-  char bytes[2];
+  char bytes[4];
 
   switch(uart.rx()) {
   case SerialHandler::OP_POLLUTION:
@@ -26,7 +26,9 @@ void SerialHandler::interrupt() {
     if(!weather) break;
     bytes[0] = uart.rx();
     bytes[1] = uart.rx();
-    weather->set(bytes[0], bytes[1]);
+    bytes[2] = uart.rx();
+    bytes[3] = uart.rx();
+    weather->set(bytes[0], bytes[1], bytes[2], bytes[3]);
     break;
   default:
     break;
