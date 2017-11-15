@@ -10,6 +10,6 @@ IndoorSlide::IndoorSlide(DHT11 &dht11) :
 
 bool IndoorSlide::update() {
   dht11.read();
-  snprintf(lines[1], 16, "T: %hhu\xdf" "C, H: %hhu%%", dht11.temp(), dht11.humid());
+  snprintf(lines[1], 17, "T: %hhu\xdf" "C, H: %hhu%%", dht11.temp(), dht11.humid());
   return true;
 }

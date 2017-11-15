@@ -11,5 +11,5 @@ public:
 
 private:
   const Pollution &pollution;
-  char lines[2][16];
+  char lines[2][17];
 };

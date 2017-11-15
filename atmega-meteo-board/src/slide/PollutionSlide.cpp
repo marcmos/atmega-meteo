@@ -11,9 +11,9 @@ bool PollutionSlide::update() {
   if(!pollution.initialized())
     return false;
 
-  snprintf(lines[0], 16, "2.5: %u (%u%%)", pollution.pm_2_5(),
+  snprintf(lines[0], 17, "2.5: %u (%u%%)", pollution.pm_2_5(),
            pollution.pm_2_5_percent());
-  snprintf(lines[1], 16, "10: %u (%u%%)", pollution.pm_10(),
+  snprintf(lines[1], 17, "10: %u (%u%%)", pollution.pm_10(),
            pollution.pm_10_percent());
 
   return true;
