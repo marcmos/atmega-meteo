@@ -5,6 +5,7 @@ import Data.Time.Clock (utctDay, getCurrentTime)
 import Control.Concurrent
 import Data.Word (Word8)
 import Foreign.Marshal.Array (newArray)
+import Control.Exception
 
 import Pollution
 import Weather
@@ -21,20 +22,20 @@ writeSerial h buf = do
   hPutBuf h p (length buf)
   putStrLn ("Wrote bytes: " ++ show buf)
 
+pollution date = do
+  pollution <- currentMeasurements . getResponseBody <$> fetchPollution date
+  pm25 <- return . round . snd $ pollution !! 1
+  pm10 <- return . round . snd $ head pollution
+  return [0x20, pm25, pm10]
+
+pollutionNow = utctDay <$> getCurrentTime >>= pollution
+
 main :: IO ()
 main = do
   commHandle <- openSerial
-  --commHandle <- snd <$> openBinaryTempFileWithDefaultPermissions "/tmp" "atmega-meteo"
+  -- commHandle <- snd <$> openBinaryTempFileWithDefaultPermissions "/tmp" "atmega-meteo"
 
-  today <- utctDay <$> getCurrentTime
-  pollution <- currentMeasurements . getResponseBody <$> fetchPollution today
-  print pollution
-
-  pm25 <- return . round . snd $ pollution !! 1
-  pm10 <- return . round . snd $ head pollution
-
-  buf <- return [0x20, pm25, pm10]
-  writeSerial commHandle buf
+  catch (pollutionNow >>= writeSerial commHandle) (\e -> putStrLn . displayException $ (e :: SomeException))
 
   Just (temp, humid, hour, minute) <- getWeather
   print (temp, humid)
