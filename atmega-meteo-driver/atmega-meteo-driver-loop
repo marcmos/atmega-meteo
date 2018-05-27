@@ -2,6 +2,7 @@
 
 while :
 do
-	./atmega-meteo-driver
-	sleep 5m
+    stty -F /dev/ttyACM0 raw
+    ./atmega-meteo-driver
+    sleep 5m
 done
