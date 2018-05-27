@@ -13,7 +13,7 @@
 #include <avr/io.h>
 
 /* UART baud rate */
-#define UART_BAUD  9600
+#define UART_BAUD  9600UL
 
 /* HD44780 LCD port connections */
 #define HD44780_RS B, 0

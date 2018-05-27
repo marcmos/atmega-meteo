@@ -14,13 +14,16 @@ void SerialHandler::enable_interrupts() {
 
 void SerialHandler::interrupt() {
   char bytes[4];
+  uint16_t pm25, pm10;
 
   switch(uart.rx()) {
   case SerialHandler::OP_POLLUTION:
     if(!pollution) break;
-    bytes[0] = uart.rx();
-    bytes[1] = uart.rx();
-    pollution->set(bytes[0], bytes[1]);
+    *(reinterpret_cast<char*>(&pm25)) = uart.rx();
+    *(reinterpret_cast<char*>(&pm25) + 1) = uart.rx();
+    *(reinterpret_cast<char*>(&pm10)) = uart.rx();
+    *(reinterpret_cast<char*>(&pm10) + 1) = uart.rx();
+    pollution->set(pm25, pm10);
     break;
   case SerialHandler::OP_WEATHER:
     if(!weather) break;

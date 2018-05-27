@@ -3,12 +3,17 @@ import System.IO
 import Network.HTTP.Simple
 import Data.Time.Clock (utctDay, getCurrentTime)
 import Control.Concurrent
-import Data.Word (Word8)
+import Data.Word (Word8, Word16)
 import Foreign.Marshal.Array (newArray)
 import Control.Exception
+import Data.ByteString.Builder (toLazyByteString, word16LE)
+import Data.ByteString.Lazy (unpack)
 
 import Pollution
 import Weather
+
+encodeWord16 :: Word16 -> [Word8]
+encodeWord16 = unpack . toLazyByteString . word16LE
 
 openSerial :: IO Handle
 openSerial = do
@@ -26,7 +31,7 @@ pollution date = do
   pollution <- currentMeasurements . getResponseBody <$> fetchPollution date
   pm25 <- return . round . snd $ pollution !! 1
   pm10 <- return . round . snd $ head pollution
-  return [0x20, pm25, pm10]
+  return $ [0x20] ++ encodeWord16 pm25 ++ encodeWord16 pm10
 
 pollutionNow = utctDay <$> getCurrentTime >>= pollution
 
