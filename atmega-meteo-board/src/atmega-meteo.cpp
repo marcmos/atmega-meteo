@@ -4,6 +4,7 @@
 #include "hw/lcd/HD44780.hpp"
 #include "hw/sensor/DHT11.hpp"
 #include "hw/interrupt.hpp"
+#include "hw/blink.hpp"
 
 #include "slide/IndoorSlide.hpp"
 #include "slide/PollutionSlide.hpp"
@@ -32,9 +33,15 @@ int main(void) {
   SerialHandler serial_handler(serial, &pollution, &weather);
   interrupt::set_serial_handler(&serial_handler);
 
+  blink_init();
+
   while(1) {
     switcher.next();
     _delay_ms(2000);
+
+    if (weather.initialized() && dht11.temp() > weather.temp()) {
+      blink();
+    }
   }
 
   return 0;
