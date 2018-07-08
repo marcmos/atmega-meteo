@@ -10,7 +10,7 @@ type Weather = (Double, Double, Int, Int)
 
 fetchWeather :: IO ByteString
 fetchWeather = do
-  request <- parseRequest "http://meteo.ftj.agh.edu.pl/meteo/meteo.xml"
+  request <- parseRequest "http://meteo2.ftj.agh.edu.pl/meteo/meteo.xml"
   getResponseBody <$> httpLBS request
 
 getWeather :: IO (Maybe Weather)
